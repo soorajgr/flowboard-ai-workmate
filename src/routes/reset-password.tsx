@@ -28,13 +28,11 @@ function ResetPasswordPage() {
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    const isRecovery = window.location.hash.includes("type=recovery");
     const { data } = supabase.auth.onAuthStateChange((event) => {
       if (event === "PASSWORD_RECOVERY") setReady(true);
     });
     supabase.auth.getSession().then(({ data: s }) => {
-      if (s.session && isRecovery) setReady(true);
-      else if (s.session) setReady(true);
+      if (s.session) setReady(true);
     });
     return () => data.subscription.unsubscribe();
   }, []);
@@ -44,7 +42,10 @@ function ResetPasswordPage() {
     setBusy(true);
     const { error } = await supabase.auth.updateUser({ password });
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     toast.success("Password updated");
     navigate({ to: "/app", replace: true });
   }

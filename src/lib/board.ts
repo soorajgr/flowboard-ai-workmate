@@ -61,13 +61,24 @@ export function initials(name: string | null | undefined): string {
   const clean = (name ?? "").trim();
   if (!clean) return "?";
   const parts = clean.split(/[\s._-]+/).filter(Boolean);
-  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
-  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  const first = parts[0] ?? clean;
+  if (parts.length <= 1) return first.slice(0, 2).toUpperCase();
+  const last = parts[parts.length - 1] ?? "";
+  return ((first[0] ?? "") + (last[0] ?? "")).toUpperCase();
 }
 
-function must<T>(res: { data: T | null; error: { message: string } | null }): T {
+type Res<T> = { data: T; error: { message: string } | null };
+
+/** Unwrap a list/single query result; throws on error. */
+function must<T>(res: Res<T>): NonNullable<T> {
   if (res.error) throw new Error(res.error.message);
-  return res.data as T;
+  return res.data as NonNullable<T>;
+}
+
+/** Unwrap a maybeSingle() result; null when no row. */
+function maybe<T>(res: Res<T>): T {
+  if (res.error) throw new Error(res.error.message);
+  return res.data;
 }
 
 export const projectsQuery = () =>
@@ -87,7 +98,7 @@ export const profileQuery = (userId: string) =>
   queryOptions({
     queryKey: ["profile", userId],
     queryFn: async () =>
-      must(await supabase.from("profiles").select("*").eq("id", userId).maybeSingle()),
+      maybe(await supabase.from("profiles").select("*").eq("id", userId).maybeSingle()),
   });
 
 export const boardQuery = (projectId: string) =>
@@ -104,7 +115,7 @@ export const boardQuery = (projectId: string) =>
           .order("position"),
       ]);
       return {
-        project: must(project),
+        project: maybe(project),
         columns: must(columns),
         tasks: must(tasks) as unknown as TaskWithMeta[],
       };
@@ -127,4 +138,4 @@ export const taskDetailQuery = (taskId: string) =>
     },
   });
 
-export { must };
+export { must, maybe };

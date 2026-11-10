@@ -1,6 +1,9 @@
 import { tool } from "ai";
 import { z } from "zod";
 import type { UserSupabase } from "@/lib/supabase-user.server";
+import type { Database } from "@/integrations/supabase/types";
+
+type TaskUpdate = Database["public"]["Tables"]["tasks"]["Update"];
 
 const priority = z.enum(["low", "medium", "high"]);
 
@@ -30,7 +33,8 @@ async function resolveColumn(
     .eq("project_id", projectId)
     .order("position");
   if (error) fail(error.message);
-  if (!columns?.length) fail("This project has no columns yet.");
+  const first = columns?.[0];
+  if (!columns || !first) fail("This project has no columns yet.");
   if (columnId) {
     const c = columns.find((col) => col.id === columnId);
     if (!c) fail("Column not found in this project.");
@@ -41,10 +45,11 @@ async function resolveColumn(
     const c =
       columns.find((col) => col.name.toLowerCase() === needle) ??
       columns.find((col) => col.name.toLowerCase().includes(needle));
-    if (!c) fail(`No column named "${columnName}". Columns: ${columns.map((x) => x.name).join(", ")}`);
+    if (!c)
+      fail(`No column named "${columnName}". Columns: ${columns.map((x) => x.name).join(", ")}`);
     return c;
   }
-  return columns[0];
+  return first;
 }
 
 export function createBoardTools(supabase: UserSupabase, userId: string) {
@@ -166,7 +171,13 @@ export function createBoardTools(supabase: UserSupabase, userId: string) {
           );
           if (subErr) fail(subErr.message);
         }
-        return { created: true, id: data.id, ref: `D-${data.ref}`, title: data.title, column: column.name };
+        return {
+          created: true,
+          id: data.id,
+          ref: `D-${data.ref}`,
+          title: data.title,
+          column: column.name,
+        };
       },
     }),
 
@@ -183,7 +194,7 @@ export function createBoardTools(supabase: UserSupabase, userId: string) {
         clear_due_date: z.boolean().nullable(),
       }),
       execute: async (input) => {
-        const patch: Record<string, unknown> = {};
+        const patch: TaskUpdate = {};
         if (input.title) patch.title = input.title.slice(0, 200);
         if (input.description !== null) patch.description = input.description;
         if (input.priority) patch.priority = input.priority;
@@ -199,12 +210,19 @@ export function createBoardTools(supabase: UserSupabase, userId: string) {
           .maybeSingle();
         if (error) fail(error.message);
         if (!data) fail("Task not found.");
-        return { updated: true, id: data.id, ref: `D-${data.ref}`, title: data.title, changed: Object.keys(patch) };
+        return {
+          updated: true,
+          id: data.id,
+          ref: `D-${data.ref}`,
+          title: data.title,
+          changed: Object.keys(patch),
+        };
       },
     }),
 
     move_task: tool({
-      description: "Move a task to a different column (by column id or column name) within its project.",
+      description:
+        "Move a task to a different column (by column id or column name) within its project.",
       inputSchema: z.object({
         task_id: z.string(),
         column_id: z.string().nullable(),

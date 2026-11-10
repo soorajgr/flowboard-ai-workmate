@@ -1,11 +1,5 @@
 import { createOpenAI } from "@ai-sdk/openai";
-import {
-  APICallError,
-  convertToModelMessages,
-  stepCountIs,
-  streamText,
-  type UIMessage,
-} from "ai";
+import { APICallError, convertToModelMessages, stepCountIs, streamText, type UIMessage } from "ai";
 import type { Json } from "@/integrations/supabase/types";
 import { getUserClient } from "@/lib/supabase-user.server";
 import { createBoardTools } from "./board-tools.server";
@@ -33,8 +27,10 @@ function friendlyError(error: unknown): string {
   if (APICallError.isInstance(error)) {
     if (error.statusCode === 402)
       return "The AI assistant is out of credits for this workspace. Add credits to keep chatting.";
-    if (error.statusCode === 429) return "The assistant is busy right now. Please try again in a moment.";
-    if (error.statusCode === 403) return "The AI assistant isn't available for this workspace right now.";
+    if (error.statusCode === 429)
+      return "The assistant is busy right now. Please try again in a moment.";
+    if (error.statusCode === 403)
+      return "The AI assistant isn't available for this workspace right now.";
   }
   const msg = error instanceof Error ? error.message : String(error);
   return msg || "Something went wrong talking to the assistant.";

@@ -95,7 +95,11 @@ function AuthPage() {
   }
 
   const title =
-    mode === "signin" ? "Welcome back" : mode === "signup" ? "Create your account" : "Reset password";
+    mode === "signin"
+      ? "Welcome back"
+      : mode === "signup"
+        ? "Create your account"
+        : "Reset password";
   const subtitle =
     mode === "signin"
       ? "Sign in to pick up where you left off."
@@ -173,7 +177,11 @@ function AuthPage() {
             )}
             <Button type="submit" variant="brand" className="w-full" disabled={busy}>
               {busy && <Loader2 className="animate-spin" />}
-              {mode === "signin" ? "Sign in" : mode === "signup" ? "Create account" : "Send reset link"}
+              {mode === "signin"
+                ? "Sign in"
+                : mode === "signup"
+                  ? "Create account"
+                  : "Send reset link"}
             </Button>
           </form>
 
@@ -207,9 +215,24 @@ function AuthShowcase() {
       <div className="absolute inset-0 flex items-center justify-center p-12">
         <div className="w-full max-w-md space-y-3">
           {[
-            { tag: "High", tone: "bg-prio-high-soft text-prio-high", title: "Ship onboarding flow", p: 72 },
-            { tag: "Medium", tone: "bg-prio-medium-soft text-prio-medium", title: "Design system tokens", p: 40 },
-            { tag: "Low", tone: "bg-prio-low-soft text-prio-low", title: "Write release notes", p: 10 },
+            {
+              tag: "High",
+              tone: "bg-prio-high-soft text-prio-high",
+              title: "Ship onboarding flow",
+              p: 72,
+            },
+            {
+              tag: "Medium",
+              tone: "bg-prio-medium-soft text-prio-medium",
+              title: "Design system tokens",
+              p: 40,
+            },
+            {
+              tag: "Low",
+              tone: "bg-prio-low-soft text-prio-low",
+              title: "Write release notes",
+              p: 10,
+            },
           ].map((c, i) => (
             <div
               key={c.title}
@@ -217,7 +240,9 @@ function AuthShowcase() {
               style={{ animationDelay: `${120 + i * 90}ms`, marginLeft: `${i * 28}px` }}
             >
               <div className="flex items-center gap-1.5">
-                <span className={`rounded-md px-1.5 py-0.5 text-[10px] font-medium ${c.tone}`}>{c.tag}</span>
+                <span className={`rounded-md px-1.5 py-0.5 text-[10px] font-medium ${c.tone}`}>
+                  {c.tag}
+                </span>
                 <span className="rounded-md bg-tag-soft px-1.5 py-0.5 text-[10px] font-medium text-tag">
                   Product
                 </span>

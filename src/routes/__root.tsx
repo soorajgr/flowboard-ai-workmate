@@ -83,12 +83,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Flowboard — Kanban with an AI assistant" },
       {
         name: "description",
-        content: "Plan projects on beautiful Kanban boards and let an AI assistant manage tasks for you.",
+        content:
+          "Plan projects on beautiful Kanban boards and let an AI assistant manage tasks for you.",
       },
       { property: "og:title", content: "Flowboard — Kanban with an AI assistant" },
       {
         property: "og:description",
-        content: "Plan projects on beautiful Kanban boards and let an AI assistant manage tasks for you.",
+        content:
+          "Plan projects on beautiful Kanban boards and let an AI assistant manage tasks for you.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
