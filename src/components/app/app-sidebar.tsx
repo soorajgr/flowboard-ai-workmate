@@ -19,6 +19,7 @@ import { useAssistant } from "@/hooks/use-assistant";
 import { cn } from "@/lib/utils";
 import { BrandWordmark } from "@/components/brand";
 import { NewProjectDialog } from "./new-project-dialog";
+import { ThemeSegmented } from "@/components/theme-toggle";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -222,7 +223,11 @@ export function AppSidebar() {
         )}
       </div>
 
-      <div className="mt-auto rounded-xl border bg-card p-3 shadow-card">
+      <div className="mt-auto pb-3">
+        <ThemeSegmented />
+      </div>
+
+      <div className="rounded-xl border bg-card p-3 shadow-card">
         <p className="text-xs font-medium">Tip</p>
         <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
           Ask the assistant to “create three tasks for launch week” — it updates your board for you.

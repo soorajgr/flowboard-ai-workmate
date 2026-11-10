@@ -180,10 +180,10 @@
   --card-foreground: oklch(0.96 0.005 264);
   --popover: oklch(0.23 0.016 268);
   --popover-foreground: oklch(0.96 0.005 264);
-  --primary: oklch(0.66 0.2 275);
-  --primary-foreground: oklch(0.16 0.02 268);
+  --primary: oklch(0.64 0.2 275);
+  --primary-foreground: oklch(0.99 0.004 270);
   --primary-soft: oklch(0.3 0.08 275);
-  --primary-glow: oklch(0.7 0.18 290);
+  --primary-glow: oklch(0.66 0.2 292);
   --secondary: oklch(0.27 0.016 268);
   --secondary-foreground: oklch(0.96 0.005 264);
   --muted: oklch(0.27 0.016 268);
@@ -201,13 +201,27 @@
   --prio-low: oklch(0.75 0.02 264);
   --tag-soft: oklch(0.32 0.07 262);
   --tag: oklch(0.78 0.12 262);
-  --chat-user: oklch(0.66 0.2 275);
-  --chat-user-foreground: oklch(0.16 0.02 268);
+  --chat-user: oklch(0.6 0.2 275);
+  --chat-user-foreground: oklch(0.99 0.004 270);
+  --col-slate: oklch(0.6 0.015 264);
+  --prio-high: oklch(0.72 0.17 25);
+  --prio-medium: oklch(0.78 0.14 65);
+  --gradient-panel-head: linear-gradient(
+    180deg,
+    oklch(0.3 0.07 280 / 60%) 0%,
+    oklch(0.21 0.016 268 / 0) 100%
+  );
+  --shadow-card-value: 0 1px 2px oklch(0 0 0 / 35%), 0 0 0 1px oklch(1 0 0 / 3%);
+  --shadow-lift-value: 0 18px 40px -12px oklch(0 0 0 / 60%), 0 4px 10px -4px oklch(0 0 0 / 40%);
+  --shadow-panel-value: 0 24px 60px -20px oklch(0 0 0 / 70%), 0 0 0 1px oklch(1 0 0 / 6%);
+  --shadow-brand-value: 0 8px 22px -8px oklch(0.6 0.22 275 / 55%);
   --sidebar: oklch(0.17 0.015 268);
   --sidebar-foreground: oklch(0.85 0.01 264);
+  --sidebar-primary: oklch(0.64 0.2 275);
   --sidebar-accent: oklch(0.23 0.016 268);
   --sidebar-accent-foreground: oklch(0.96 0.005 264);
   --sidebar-border: oklch(1 0 0 / 9%);
+  --sidebar-ring: oklch(0.66 0.2 275 / 50%);
 }
 
 @layer base {

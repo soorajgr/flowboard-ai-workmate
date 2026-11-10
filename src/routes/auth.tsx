@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { BrandWordmark } from "@/components/brand";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const searchSchema = z.object({ redirect: z.string().optional() });
 
@@ -108,7 +109,8 @@ function AuthPage() {
         : "We'll email you a link to set a new password.";
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="relative flex min-h-screen bg-background">
+      <ThemeToggle className="absolute right-4 top-4 z-10" />
       <div className="flex flex-1 flex-col justify-center px-6 py-12 sm:px-12">
         <div className="mx-auto w-full max-w-sm animate-fade-up">
           <Link to="/">

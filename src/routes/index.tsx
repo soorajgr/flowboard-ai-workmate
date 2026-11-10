@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Bot, GripVertical, ListChecks } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BrandMark, BrandWordmark } from "@/components/brand";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -86,6 +87,7 @@ function Landing() {
       <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
         <BrandWordmark />
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           <Button asChild variant="ghost">
             <Link to="/auth" search={{ redirect: undefined }}>
               Sign in
