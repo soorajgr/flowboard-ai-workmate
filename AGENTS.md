@@ -28,3 +28,11 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+
+- Board data is read/written from the browser with the Supabase client under per-user RLS; keep every table's policies scoped to `auth.uid()` so no extra server layer is needed.
+- AI chat streams from the `/api/chat` server route (`src/lib/ai/chat.server.ts`), which verifies the bearer token and runs board tools with a user-scoped client — never the admin client — so the assistant can only touch the caller's data.
+- The active chat thread lives in the `?chat=` search param on the `/app` layout so conversations survive reloads and can be linked.
+- Card/column order uses fractional `position` values (`positionBetween`) so a move updates one row.
+- New users get a profile, a starter project and sample tasks from the `handle_new_user` trigger; new projects get default columns from a trigger.
